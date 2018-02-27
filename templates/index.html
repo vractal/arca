@@ -1,44 +1,41 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Arca de filmé</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href={{url_for('static',filename="style.css")}}>
+{% extends "base.html" %}
 
-  </head>
-  <body>
-    <div class="container">
-      <nav>
-        <h1>{{ session.query }}</h1>
-        <form class="" action="{{ url_for('index')}}" method="post">
-          <input type="text" name="query" value="">
-          <button type="submit" >enviar</button>
+{% block body %}
 
+
+    <div class="row justify-content-center">
+
+
+  {% if session.display %}
+
+  {% for movie in session.display %}
+    <div class="col-8 movie-preview">
+      <img class="poster-img col-4" src={{ url_for('static',filename= movie['posterimg'])}} alt="no poster">
+      <div class="movie-info col-8">
+        <h4 class="title">{{ movie.title }}</h4>
+        {% if not movie.in_arca %}
+        <form class="add-form" action="{{ url_for('movie_add',id=movie.themoviedb_id)}}" method="get">
+            <button class="btn btn-outline-info btn-sm" type="submit" name="arca">Adicionar</button>
         </form>
+        {% endif %}
+        <p class="overview">{{ movie.in_arca}}  {{ movie.overview }}</p>
 
-      </nav>
-      <div class="content">
-        <div class="movie">
-          <ul>
-            {% for movie in movies %}
-
-            <li><h4>{{ movie }}</h4>         </li>
-            {% endfor %}
-
-          </ul>
-
-
+        <div class="links">
+          <a class="btn btn-outline-dark btn-sm disabled" href="#">IMDB</a> <a class="btn btn-outline-dark btn-sm" href="https://www.themoviedb.org/movie/{{ movie.themoviedb_id }}">The Movie Database</a>
 
         </div>
 
       </div>
+
+
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    {% endfor %}
 
-  </body>
-</html>
+    {% endif %}
+      </div>
+
+
+
+  {% endblock %}

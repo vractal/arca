@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="row justify-content-center">
+    <form class="" action={{url_for('login')}} method="POST">
+      <input type="text" name="login" value="">
+      <input type="password" name="password" value="">
+      <button class="btn btn-outline-sucess" type="submit" name="button">Login</button>
+
+    </form>
+
+  {% for message in get_flashed_messages() %}
+    <div class="flash alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <br>
+      {{ message}}
+  {% endfor %}
+
+    </div>
+  </div>
+
+
+
+
+{% endblock %}
