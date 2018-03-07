@@ -1,0 +1,2 @@
+* nomear com mesmo nome metodo e atributo levanta erro (checar mais infos)
+* a posição do "%" no jinja IMPORTA ({% extends "template.html"})

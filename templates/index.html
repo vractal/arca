@@ -9,6 +9,7 @@
   {% if session.display %}
 
   {% for movie in session.display %}
+
     <div class="col-8 movie-preview">
       <img class="poster-img col-4" src={{ url_for('static',filename= movie['posterimg'])}} alt="no poster">
       <div class="movie-info col-8">
