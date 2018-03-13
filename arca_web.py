@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, render_template, url_for,redirect, session, flash
+from flask import Flask, request, jsonify, render_template, url_for,redirect, session, flash
 import requests
 from api_key import api_key
 import mdbpy as mdb
@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
-@app.route("/", methods=['GET','POST'])
+@app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
         query = request.form['query']
@@ -20,9 +20,7 @@ def index():
     return render_template("index.html")
 
 
-
-
-@app.route("/registrar",methods=['GET', 'POST'])
+@app.route("/registrar", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         login = request.form['login']
@@ -37,13 +35,14 @@ def register():
 
     return render_template("registrar.html")
 
-@app.route("/login", methods=["GET","POST"])
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         login = request.form["login"]
         password = request.form["password"]
 
-        user = md.User.get_instance(login,password)
+        user = md.User.get_instance(login, password)
         if user:
             if user.log_in():
                 session["user"] = user.login
@@ -52,9 +51,10 @@ def login():
             flash("Senha incorreta ou usuário não existe!")
     return render_template("login.html")
 
+
 @app.route("/logout", methods=["GET"])
 def logout():
-    session.pop("user",None)
+    session.pop("user", None)
     session.pop("display", None)
     return redirect(url_for("index"))
 
@@ -66,6 +66,51 @@ def logout():
 
 
 
+#api endpoints
+
+#
+
+#Busca
+@app.route("/api/search", methods=["GET"])
+def api_search():
+    query = request.args["query"]
+    response = md.search_display(query)
+    return jsonify(response)
+
+#busca mais
+
+#Editar info
+
+
+#Adicionar
+@app.route("/api/movie/add", methods=["GET"])
+def api_add():
+    movie_id = request.args["id"]
+    movie = md.Movie.get_instance(movie_id)
+    movie.arca_on()
+    movie.update_db()
+    return "True"
+
+
+#Remover
+@app.route("/api/movie/del", methods=["GET"])
+def api_del():
+    movie_id = request.args["id"]
+    movie = md.Movie.get_instance(movie_id)
+    movie.arca_off()
+    movie.update_db()
+    return "True"
+
+@app.route("/api/arca", methods=["GET"])
+def api_arca():
+    response = md.Database.show_arca()
+    return jsonify(response)
+
+
+
+@app.route("/api-teste", methods=["GET"])
+def testing():
+    return render_template("api_test.html")
 
 
 @app.route("/arca", methods=["GET"])
@@ -80,19 +125,17 @@ def clean():
     return redirect(url_for('index'))
 
 
+@app.route("/id/<id>/remove", methods=["GET"])
+def movie_remove(id):
+    movie = md.Movie.get_instance(int(id))
+    movie.arca_off()
+    return redirect(url_for('clean'))
+
 @app.route("/id/<id>/add", methods=["GET"])
 def movie_add(id):
     movie = md.Movie.get_instance(int(id))
     movie.arca_on()
-    return redirect(url_for('index'))
-
-""" procurar num filme, mostrar opcoes com miniaturas pequenas.
-    botao para clicar, possibilitando adicionar a arca.
-    (Salvar tudo na db como procurados, caso aconteça a procura de novo.futro)
-
-    colocar bootstrap, fazer um negocinho bonitinho.
-    (input, area embaixo onde vao aparecer os filmes)
-    api para pesquisa, passando todos os dados dos filmes pro template."""
+    return redirect(url_for('clean'))
 
 
 if __name__ == "__main__":

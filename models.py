@@ -9,12 +9,19 @@ import sys
 import os
 import uuid
 
-graph = Graph(host="localhost",port="7687", user="neo4j", password=db_pwd)
+graph = Graph(host="localhost", port="7687", user="neo4j", password=db_pwd)
 selector = NodeSelector(graph)
-def unique():
-    graph.schema.create_uniqueness_constraint("Movie","themoviedb_id")
-def drop_unique():
-    graph.schema.drop_uniqueness_constraint("Movie","themoviedb_id")
+
+
+def unique_movie():
+    graph.schema.create_uniqueness_constraint("Movie", "themoviedb_id")
+
+def unique_user():
+    graph.schema.create_uniqueness_constraint("User", "login")
+    print("foi")
+
+def drop_unique_movie():
+    graph.schema.drop_uniqueness_constraint("Movie", "themoviedb_id")
 
 
 # To-do
@@ -96,7 +103,7 @@ class Movie(object):
     @classmethod
     def find_db(cls, themoviedb_id):
         " returns a node from database based on moviedatabase id"
-        movie = selector.select("Movie",themoviedb_id=themoviedb_id)
+        movie = selector.select("Movie",themoviedb_id=int(themoviedb_id))
         movie = movie.first()
         if movie:
             return movie
