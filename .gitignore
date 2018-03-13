@@ -1,4 +1,6 @@
 venv/
 api_key.py
-static/posters/
+arca/static/posters/
 *.pyc
+.ropeproject/
+inicio.sh

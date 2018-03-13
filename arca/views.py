@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify, render_template, url_for,redirect, session, flash
+from arca import app
 import requests
-from api_key import api_key
-import mdbpy as mdb
-import models as md
-
-SECRET_KEY = 'batata'
-app = Flask(__name__)
-app.config.from_object(__name__)
+from arca.api_key import api_key
+import arca.models as md
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -58,17 +54,7 @@ def logout():
     session.pop("display", None)
     return redirect(url_for("index"))
 
-
-
-
-
-
-
-
-
 #api endpoints
-
-#
 
 #Busca
 @app.route("/api/search", methods=["GET"])
@@ -111,32 +97,3 @@ def api_arca():
 @app.route("/api-teste", methods=["GET"])
 def testing():
     return render_template("api_test.html")
-
-
-@app.route("/arca", methods=["GET"])
-def arca():
-    session['display'] = md.Database.show_arca()
-    return redirect(url_for('index'))
-
-
-@app.route("/clean", methods=["GET"])
-def clean():
-    session['display'] = []
-    return redirect(url_for('index'))
-
-
-@app.route("/id/<id>/remove", methods=["GET"])
-def movie_remove(id):
-    movie = md.Movie.get_instance(int(id))
-    movie.arca_off()
-    return redirect(url_for('clean'))
-
-@app.route("/id/<id>/add", methods=["GET"])
-def movie_add(id):
-    movie = md.Movie.get_instance(int(id))
-    movie.arca_on()
-    return redirect(url_for('clean'))
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

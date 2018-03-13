@@ -1,7 +1,7 @@
 import requests
 import json
-from api_key import api_key, db_pwd
-import mdbpy as mdb
+from arca.api_key import api_key, db_pwd
+import arca.mdbpy as mdb
 from datetime import datetime
 import time
 from py2neo import Graph, Node, Relationship, NodeSelector
@@ -66,10 +66,6 @@ class User(object):
 
 
 
-
-
-
-
 def create_instance(response):
     # resonse is a dict object containg info for one movie
 
@@ -80,11 +76,7 @@ def create_instance(response):
     return mv
 
 
-"""
-class Tag(obiect):
 
-    def __init__(self, title)
-"""
 class Movie(object):
     """docstring for movie."""
     def __init__(self, themoviedb_id,original_title, in_arca=False, overview = "None",  imdb_id="None", tagline="None",  release_date="None", poster_path ="None", vote_average="None"):
