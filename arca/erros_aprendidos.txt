@@ -1,2 +1,3 @@
 * nomear com mesmo nome metodo e atributo levanta erro (checar mais infos)
 * a posição do "%" no jinja IMPORTA ({% extends "template.html"})
+* Botao gerado dinamicamente tem que ser chamado atravez de metodos dinamicos como o $(document).on(evento,seletor,funcao)

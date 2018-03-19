@@ -35,7 +35,7 @@ def get_poster(obj):
     base_url = 'http://image.tmdb.org/t/p/'
     size =  "w500"
     poster = requests.get(base_url+ size+ str(obj['poster_path']))
-    filename = "static/posters/" + obj['poster_path']
+    filename = "arca/static/posters/" + obj['poster_path']
     with open(filename, 'wb') as f:
             f.write(poster.content)
 
@@ -45,7 +45,7 @@ def get_poster2(name,path):
     size =  "w342"
     name = name
     poster = requests.get(base_url+ size+ str(path))
-    filename = "static/posters/" + str(path)
+    filename = "arca/static/posters/" + str(path)
     with open(filename, 'wb') as f:
             f.write(poster.content)
     return str(name) + ".jpg"

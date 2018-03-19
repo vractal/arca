@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Arca de filmé</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" href={{url_for( 'static',filename='bootstrap.min.css' )}}>
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" href={{url_for( 'static',filename="style3.css" )}}>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand navbar-dark fixed-top">
+
+        <ul class="navbar-nav">
+            <!-- NOTE: Arca (lista geral) -->
+            <li class="nav-brand">
+                <a id="arca" href={{url_for( "arca_view")}}>
+                    <object type="image/svg+xml" data={{url_for("static",filename="images/arca.svg")}}></object>
+                 </a>
+            </li>
+            <!-- NOTE:  Lista da pessoa-->
+            <li class="nav-item">
+                <a class="nav-link" href={{url_for( "arca_view")}}>Minha Lista</a>
+            </li>
+            <!-- NOTE: Perfil da pessoa e "amigos" -->
+            <li class="nav-item">
+                <a class="nav-link" href={{url_for( "arca_view")}}>Pessoas</a>
+            </li>
+            <!-- NOTE: Configurações
+            <li class="nav-item">
+                <a class="nav-link" href={{url_for( "arca_view")}}>
+                    <object  type="image/svg+xml" data={{url_for("static",filename="images/user.svg")}}></object>
+                </a>
+            </li>-->
+            <!-- NOTE: Sair -->
+            <li class="nav-item">
+                <a class="nav-link" href={{url_for( "arca_view")}}></a>
+            </li>
+
+
+        </ul>
+
+
+
+    </nav>
+
+
+
+            <main role="main " class="container">
+
+
+
+
+
+
+
+            </main>
+
+
+    <!-- /.container -->
+
+
+
+
+
+
+    <!-- JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src={{url_for( 'static',filename='jquery-3.2.1.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='popper.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='bootstrap.min.js' )}}></script>
+
+    <script src={{url_for( 'static',filename='renderer.js' )}}></script>
+
+</body>
+
+</html>
+
+
+<!--
+ <button class="toogle-ark btn btn-outline-info btn-sm " data-toogle="false" data-id="603">Adicionar</button>
+ <a class="btn btn-outline-dark btn-sm disabled" href="#">IMDB</a> <a class="btn btn-outline-dark btn-sm" href="https://www.themoviedb.org/movie/603">The Movie Database</a>
+ <p class="overview">Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.</p>
+
+
+-->

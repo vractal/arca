@@ -1,0 +1,38 @@
+
+html, body {
+
+  background-color: #00bcd4;
+  font-size: 20px;
+  height: 100%;
+}
+
+
+nav {
+
+}
+
+nav li  {
+    list-style: none;
+
+}
+
+#arca object {
+    width: 150px;
+    margin: 20px;
+}
+
+object {
+    width: 50px;
+}
+
+main {
+    padding-top: 9rem;
+}
+
+.grid {
+    width: 960px;
+    height: 100%;
+    margin-top: 0px;
+    background-color: #f7f7ff;
+    box-shadow: 0px 2px 5px gray;
+}
