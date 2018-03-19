@@ -1,0 +1,67 @@
+/* NOTE: LOGIN/REG PAGE */
+form.login {
+
+    text-align: center;
+    width: 250px;
+
+}
+form object {
+    width: 250px;
+    margin-bottom: 10px;
+
+}
+.login input[type="submit"] {
+    color: #01304290;
+
+    border: none ;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-left: -20px;
+    padding: 0px;
+    width: 20px;
+    background-color:  #cae4db;
+
+}
+.login input[type="submit"]:hover {
+    cursor: pointer;
+}
+.login input[type="text"], .login input[ type="password"], .login input[type="email"] {
+    text-align: center;
+    background-color: #cae4db;
+    color:#013042;
+    width: 75%;
+    margin: 10px 0px 20px 0px;
+    border-style: none;
+    border-bottom: #013042 dotted 2px;
+    box-shadow: 1px;
+}
+ .login input[type="email"]{
+     font-size: 1rem;
+     width: 100%;
+ }
+ .login input[type="email"]:invalid {
+     outline: none;
+     border-color: #cf535d;
+     box-shadow: none;
+
+ }
+.login input[ type="password"] {
+    padding-right: 20px;
+}
+
+.flash {
+    position: relative;
+    left: -25px;
+    top: -25px;
+    margin-bottom: -10px;
+    font-weight: 400;
+    font-size: 1rem;
+    color: #5c2e59;
+    width: 300px;
+
+}
+
+.flash p {
+    padding: 5px;
+    margin: 0px;
+}
