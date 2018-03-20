@@ -15,21 +15,21 @@
     <nav>
         <ul>
             <li>
-                <a href="#">Arca</a>
+                <a href={{url_for("arca_view")}}>Arca</a>
             </li>
             <li>
-                <a href="#">Minha Lista</a>
+                <a href={{url_for("my_list")}}>Minha Lista</a>
             </li>
             <li>
-                <a href="#">Pessoas</a>
+                <a href={{url_for("people")}}>Pessoas</a>
             </li>
             <li>
-                <a href="#">Sair</a>
+                <a href={{url_for("logout")}}>Sair (<span id="user-name">{{ session.user }}</span>)</a>
             </li>
             <li>
-                <form action="base.html" id="query">
-                    <input type="text" name="" value="">
-                    <input type="submit" name="" value="">
+                <form id="query">
+                    <input type="text" name="query" >
+                    <button type="submit">Enviar</button>
 
                 </form>
             </li>
@@ -53,7 +53,7 @@
     <!-- JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
+    <script src={{url_for( 'static',filename='jquery-3.2.1.min.js' )}}></script>
     <script src={{url_for( 'static',filename='renderer.js' )}}></script>
 
     {% block scripts %} {% endblock %}

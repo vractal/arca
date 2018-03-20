@@ -54,10 +54,24 @@ def logout():
     session.pop("display", None)
     return redirect(url_for("index"))
 
+@app.route("/pessoas", methods=["GET"])
+def people():
+    people = md.Database.show_users()
+    return render_template("pessoas.html", people=people)
+
+
+@app.route("/<string:login>", methods=["GET"])
+def user_page(login):
+    profile = login
+    return render_template("user.html", profile=profile)
 
 @app.route("/teste", methods=["GET"])
 def testing():
     return render_template("api_test.html")
+
+@app.route("/minhalista",methods=["GET"])
+def my_list():
+    return render_template("minhalista.html")
 
 @app.route("/teste2", methods=["GET"])
 def test():

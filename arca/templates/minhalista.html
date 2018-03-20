@@ -1,9 +1,6 @@
 {% extends "base.html" %} {% block body %}
 
 
-
-
-
     <div id="movie-list">
 
     </div>
@@ -14,7 +11,7 @@
 {% endblock %} {% block scripts %}
 <script>
     $(document).ready(function() {
-        Frontark.showArca()
+        Frontark.showList($("#user-name").html())
     })
 </script>
 

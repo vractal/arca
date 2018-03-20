@@ -1,8 +1,11 @@
 {% extends "base.html" %} {% block body %}
+    <div class="profile">
+        <h4>Filmes salvos por <span id="profile">{{ profile}}</span></h4>
 
 
 
 
+    </div>
 
     <div id="movie-list">
 
@@ -14,7 +17,7 @@
 {% endblock %} {% block scripts %}
 <script>
     $(document).ready(function() {
-        Frontark.showArca()
+        Frontark.showList($("#profile").html())
     })
 </script>
 

@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block body %}
+
+
+    <div id="people-list">
+
+        {% for person in people %}
+        <div class="person">
+        <a href={{url_for("user_page",login=person.login)}}><h1>{{ person.login}}</h1></a>
+
+
+        </div>
+        {% endfor %}
+
+
+    </div>
+
+
+
+
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        //Frontark.showPeople()
+    })
+</script>
+
+{% endblock %}

@@ -36,12 +36,12 @@ class User(object):
         self.email = email
         self.id_ = str(uuid.uuid4()) if id_ is None else id_
 
-    def search_db(self):
+    def fetch_db(self):
         sel = selector.select("User", login=str(self.login))
         return sel.first()
 
     def register(self):
-        if not self.search_db():
+        if not self.fetch_db():
             user = Node("User", id_=self.id_, login=self.login,
                         password=self.password, email=self.email)
             graph.create(user)
@@ -57,8 +57,76 @@ class User(object):
         else:
             return None
 
+    @classmethod
+    def get_instance_nopwd(cls, login):
+        sel = selector.select("User", login=str(login)).first()
+        if sel:
+            return User(login, sel["password"], sel["email"])
+        else:
+            return None
+
+    def add_movie(self, id):
+        """ Add movie in arc"""
+        movie = Movie.get_instance(id)
+        #criar relação user-[salvou]->movie
+        node = movie.fetch_db()
+        user_node = self.fetch_db()
+        if not graph.match_one(start_node=user_node,end_node=node,rel_type='SALVOU'):
+            rel = Relationship(user_node, "SALVOU", node, data=str(datetime.now()))
+            graph.create(rel)
+            arca = Database.fetch_arca()
+            rel2 = graph.match_one(start_node=node,end_node=arca,rel_type='SAVED_IN')
+            if rel2:
+                rel2["times"]+= 1
+                graph.push(rel2)
+            else:
+                rel2 = Relationship(node, "SAVED_IN", arca, times=1, data=str(datetime.now()))
+                graph.create(rel2)
+
+
+        #mudar datetime
+
+    def del_movie(self, id):
+        """ Add movie in arc"""
+        movie = Movie.get_instance(id)
+        #criar relação user-[salvou]->movie
+        node = movie.fetch_db()
+        user_node = self.fetch_db()
+        rel = graph.match_one(start_node=user_node,end_node=node,rel_type="SALVOU")
+        if rel:
+            arca = Database.fetch_arca()
+            rel2 = graph.match_one(start_node=node,end_node=arca,rel_type='SAVED_IN')
+            rel2["times"] -= 1
+            if rel2["times"] < 1:
+                graph.separate(rel2)
+            else:
+                graph.push(rel2)
+            rel2 = graph.match_one(start_node=node,end_node=arca,rel_type="IS_IN")
+            graph.separate(rel)
+
+        #mudar datetime
+
+    def get_list(self):
+        """ Returns a list with all movies added by User"""
+        lista = []
+        user_node = self.fetch_db()
+        sel = graph.match(start_node=user_node, rel_type="SALVOU")
+        for rel in sel:
+            mv = rel.end_node()
+            movie = {}
+            movie['title'] = mv['original_title']
+            movie['themoviedb_id'] = mv['themoviedb_id']
+            movie["in_arca"] = mv['in_arca']
+        #    movie['imdb_id'] = mv['imdb_id']
+            movie['overview'] = mv['overview'] + "\n da db"
+            movie['tagline'] = "nenhuma"
+            if mv["poster_path"]:
+                movie['posterimg'] = "posters/" + mv['poster_path']
+            lista.append(movie)
+        return lista
+
     def log_in(self):
-        search = self.search_db()
+        search = self.fetch_db()
         if search:
             if self.password == search['password']:
                 return True
@@ -80,7 +148,7 @@ def create_instance(response):
 class Movie(object):
     """docstring for movie."""
 
-    def __init__(self, themoviedb_id, original_title, in_arca=False,
+    def __init__(self, themoviedb_id, original_title, saved=0,
                  overview="None", imdb_id="None", release_date="None",
                  poster_path="None",):
 
@@ -90,7 +158,7 @@ class Movie(object):
         self.release_date = release_date
         self.poster_path = poster_path
         self.overview = overview
-        self.in_arca = in_arca
+        self.saved = saved
 
     @classmethod
     def find_db(cls, themoviedb_id):
@@ -148,17 +216,24 @@ class Movie(object):
         except:
             return False
 
-    def arca_on(self):
-        self.in_arca = True
-        self.update_db()
+    def arca_on(self,login):
+        self.saved = "true"
 
     def arca_off(self):
-        self.in_arca = False
-        self.update_db()
+        self.saved = "false"
+    def in_arc(self):
+        """ method to say if a movie is in the ark"""
+        mv = self.fetch_db()
+        sel = graph.match(start_node=mv, rel_type="IS_IN")
+
+
 
 
 class Database(object):
 
+    @staticmethod
+    def fetch_arca():
+        return selector.select("Arca").first()
     @staticmethod
     def search_movie(query):
         movies = []
@@ -169,7 +244,7 @@ class Database(object):
             movie['themoviedb_id'] = mv['themoviedb_id']
             movie["in_arca"] = mv['in_arca']
         #    movie['imdb_id'] = mv['imdb_id']
-            movie['overview'] = mv['overview'] + "\n da db"
+            movie['overview'] = mv['overview']
             movie['tagline'] = "nenhuma"
             if mv["poster_path"]:
                 movie['posterimg'] = "posters/" + mv['poster_path']
@@ -195,6 +270,15 @@ class Database(object):
 
             movies.append(movie)
         return movies
+    @staticmethod
+    def show_users():
+        users = []
+        sel = selector.select("User")
+        for us in sel:
+            user = {}
+            user["login"] = us["login"]
+            users.append(user)
+        return users
 
 
 def search_display(query):

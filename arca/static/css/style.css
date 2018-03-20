@@ -1,0 +1,79 @@
+/* NOTE: nav */
+
+nav {
+    display: inline;
+}
+nav ul {
+    margin: 0px 10px;
+    padding: 0px;
+}
+nav ul li {
+    display: inline-block;
+    margin: 10px;
+    list-style: none;
+}
+#query {
+
+}
+#people-list, .profile h4{
+    text-align: center;
+}
+#movie-list, {
+
+    width: 100%;
+    margin: 20px auto;
+}
+
+.avatar {
+    width: 100px;
+}
+/* NOTE: Filme */
+.movie-preview {
+    position: relative;
+    width: 600px;
+    margin: 10px auto;
+    height: 200px;
+
+
+}
+
+.movie-info {
+    width: 400px;
+
+}
+
+.movie-info {
+position: absolute;
+display: inline-block;
+margin-left: 10px;
+
+}
+.movie-info .head {
+    position: relative;
+}
+.movie-info .title{
+    font-size: 20px;
+    margin: 5px 0px;
+}
+
+.toogle-ark {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.poster-img {
+
+    width: 135px;
+    height: 200px;
+    margin: 0px;
+    padding: 0px;
+}
+.overview {
+    height: 100px;
+    overflow: hidden;
+
+    margin: 25px 0px;
+}
+.links {
+    margin-top: 25px;
+}
