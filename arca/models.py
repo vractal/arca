@@ -140,7 +140,7 @@ def create_instance(response):
     # resonse is a dict object containg info for one movie
 
     mv = Movie(
-        original_title=response["original_title"], themoviedb_id=response["id"])
+        title_br=response["title"], themoviedb_id=response["id"])
     for key in response:
         if key in mv.__dict__:
             setattr(mv, key, response[key])
@@ -150,7 +150,7 @@ def create_instance(response):
 class Movie(object):
     """docstring for movie."""
 
-    def __init__(self, themoviedb_id,title_br, original_title, saved=0, in_arca=False,
+    def __init__(self, themoviedb_id,title_br, original_title="none", saved=0, in_arca=False,
                  overview="None", imdb_id="None", release_date="None",
                  poster_path="None",):
 
@@ -178,7 +178,7 @@ class Movie(object):
     def get_instance(cls, themoviedb_id):
         " returns a node from database based on moviedatabase id"
         response = Movie.find_db(themoviedb_id)
-        mv = Movie(original_title=response["original_title"],title_br=response["title_br"],
+        mv = Movie(title_br=response["title_br"],
                    themoviedb_id=response["id"])
         for key in response:
             if key in mv.__dict__:
@@ -240,15 +240,22 @@ class Movie(object):
 class Database(object):
 
     @staticmethod
+    def create_arca():
+        if not Database.fetch_arca():
+            arca = Node("Arca")
+            graph.create(arca)
+
+    @staticmethod
     def fetch_arca():
         return selector.select("Arca").first()
     @staticmethod
     def search_movie(query):
         movies = []
         ql = query.lower()
-        for mv in selector.select("Movie").where("_.original_title_lower CONTAINS '%s'" % (ql)):
+        for mv in selector.select("Movie").where("_.title_br_lower CONTAINS '%s'" % (ql)):
             movie = {}
-            movie['title'] = mv['original_title']
+            movie['original_title'] = mv['original_title']
+            movie["title"] = mv["title_br"]
             movie['themoviedb_id'] = mv['themoviedb_id']
             movie["in_arca"] = mv['in_arca']
         #    movie['imdb_id'] = mv['imdb_id']
