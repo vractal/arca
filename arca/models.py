@@ -74,6 +74,7 @@ class User(object):
         if not graph.match_one(start_node=user_node,end_node=node,rel_type='SALVOU'):
             rel = Relationship(user_node, "SALVOU", node, data=str(datetime.now()))
             graph.create(rel)
+            movie.arca_on()
             arca = Database.fetch_arca()
             rel2 = graph.match_one(start_node=node,end_node=arca,rel_type='SAVED_IN')
             if rel2:
@@ -99,6 +100,7 @@ class User(object):
             rel2["times"] -= 1
             if rel2["times"] < 1:
                 graph.separate(rel2)
+                movie.arca_off()
             else:
                 graph.push(rel2)
             rel2 = graph.match_one(start_node=node,end_node=arca,rel_type="IS_IN")
@@ -148,17 +150,19 @@ def create_instance(response):
 class Movie(object):
     """docstring for movie."""
 
-    def __init__(self, themoviedb_id, original_title, saved=0,
+    def __init__(self, themoviedb_id,title_br, original_title, saved=0, in_arca=False,
                  overview="None", imdb_id="None", release_date="None",
                  poster_path="None",):
 
         self.themoviedb_id = themoviedb_id
         self.imdb_id = imdb_id
+        self.title_br = title_br
         self.original_title = original_title
         self.release_date = release_date
         self.poster_path = poster_path
         self.overview = overview
         self.saved = saved
+        self.in_arca = in_arca
 
     @classmethod
     def find_db(cls, themoviedb_id):
@@ -174,7 +178,7 @@ class Movie(object):
     def get_instance(cls, themoviedb_id):
         " returns a node from database based on moviedatabase id"
         response = Movie.find_db(themoviedb_id)
-        mv = Movie(original_title=response["original_title"],
+        mv = Movie(original_title=response["original_title"],title_br=response["title_br"],
                    themoviedb_id=response["id"])
         for key in response:
             if key in mv.__dict__:
@@ -192,8 +196,9 @@ class Movie(object):
         else:
             movie_node = Node(
                 "Movie", in_arca=self.in_arca, themoviedb_id=self.themoviedb_id,
-                original_title=self.original_title, original_title_lower=self.original_title.lower(), overview=self.overview,
-                imdb_id=self.imdb_id, release_date=self.release_date,
+                title_br=self.title_br, title_br_lower=self.title_br.lower(),
+                original_title=self.original_title, original_title_lower=self.original_title.lower(),
+                overview=self.overview, imdb_id=self.imdb_id, release_date=self.release_date,
                 poster_path=self.poster_path)
             graph.create(movie_node)
             return True
@@ -216,11 +221,14 @@ class Movie(object):
         except:
             return False
 
-    def arca_on(self,login):
-        self.saved = "true"
+    def arca_on(self):
+        self.in_arca = True
+        self.update_db()
 
     def arca_off(self):
-        self.saved = "false"
+        self.in_arca = False
+        self.update_db()
+
     def in_arc(self):
         """ method to say if a movie is in the ark"""
         mv = self.fetch_db()
@@ -283,22 +291,11 @@ class Database(object):
 
 def search_display(query):
     movies = []
-    if len(Database.search_movie(query)) > 0:
-        return Database.search_movie(query)
-
-    else:
+    if len(Database.search_movie(query)) < 1:
         results = mdb.search(query)['results'][0:5]
         for result in results:
             create_instance(result).insert_db()
-            poster_name = mdb.get_poster2(
+            mdb.get_poster2(
                 result['title'], result['poster_path'])
-            movie = {}
-            movie['title'] = result['original_title']
-            movie['themoviedb_id'] = result['id']
-        #    movie['imdb_id'] = result['imdb_id']
-            movie['overview'] = result['overview']
-            movie['tagline'] = "nenhuma"
-            if result["poster_path"]:
-                movie['posterimg'] = "posters/" + result["poster_path"]
-            movies.append(movie)
-        return movies
+
+    return Database.search_movie(query)

@@ -57,7 +57,7 @@ def logout():
 @app.route("/pessoas", methods=["GET"])
 def people():
     people = md.Database.show_users()
-    return render_template("pessoas.html", people=people)
+    return render_template("pessoas.html",people=people)
 
 
 @app.route("/<string:login>", methods=["GET"])
