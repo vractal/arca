@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block body %}
+
+
+    <div class="profile">
+        <h4>Filmes salvos por <span id="profile">{{ profile}}</span></h4>
+
+
+    </div>
+
+    <div id="movie-list">
+
+    </div>
+
+
+
+
+{% endblock %} {% block scripts %}
+<script>
+    $(document).ready(function() {
+        Frontark.showList($("#profile").html())
+    })
+</script>
+
+{% endblock %}

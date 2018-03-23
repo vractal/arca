@@ -1,80 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Starter Template for Bootstrap</title>
+    <title>Arca de filmé</title>
+    <link rel="stylesheet" href={{url_for( 'static',filename="css/reset.css" )}}>
+    <link rel="stylesheet" href={{url_for( 'static',filename="css/style.css" )}}>
 
-    <!-- Bootstrap core CSS -->
+</head>
 
-    <link rel="stylesheet" href={{url_for('static',filename='bootstrap.min.css')}}>
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href={{url_for('static',filename="style.css")}}>
+<body class="">
+    <nav>
+        <ul class="container">
+            <li class="left">
+                <a href={{url_for("arca_view")}}>Arca</a>
+            </li>
+            <li class="left">
+                <a href={{url_for("my_list")}}>Minha Lista</a>
+            </li>
 
-  </head>
+            <li class="query">
+                <form id="query">
+                    <input placeholder="Buscar para adicionar filme" type="text" name="query" >
+                    <button class="query-submit" type="submit">Buscar</button>
 
-  <body>
-
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Arca de filme</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-
-          <li class="nav-item active">
-            <a  id="arca" class="nav-link" href="#">Arca <span class="sr-only"></span></a>
-          </li>
-          {% if session.user %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('logout')}}">Logout ({{ session.user}})<span class="sr-only">(current)</span></a>
-          </li>
-          {% else %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('login')}}">login <span class="sr-only">(current)</span></a>
-          </li>
-          {% endif %}
+                </form>
+            </li>
+            <li class="right">
+                <a href={{url_for("logout")}}>Sair (<span id="user-name">{{ session.user }}</span>)</a>
+            </li>
+            <li class="right">
+                <a href={{url_for("people")}}>Pessoas</a>
+            </li>
 
         </ul>
-        <form id="query" class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" name='query' type="text">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
+
     </nav>
+<div class="">
+
+</div>
+
+    <main id="main" role="main" class="">
 
 
+        {% block body %}
+        {% endblock %}
 
-    <main role="main" class="container">
-
-
-    {% block body %}
-
-    {% endblock %}
 
     </main>
 
-    <!-- /.container -->
 
 
 
 
 
 
-    <!-- Bootstrap core JavaScript
+
+    <!-- JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src={{url_for('static',filename='jquery-3.2.1.min.js')}}></script>
-    <script src={{url_for('static',filename='popper.min.js')}}></script>
-    <script src={{url_for('static',filename='bootstrap.min.js')}}></script>
-    <script src={{url_for('static',filename='renderer.js')}}></script>
-    {% block scripts %}
-    {% endblock %}
+    <script src={{url_for( 'static',filename='jquery-3.2.1.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='jquery.nicescroll.min.js' )}}></script>
 
-  </body>
+    <script src={{url_for( 'static',filename='renderer.js' )}}></script>
+
+
+    {% block scripts %} {% endblock %}
+    <div class="modal">
+    <div class="loader">Perai, carregando</div>
+
+    </div>
+
+</body>
+
 </html>

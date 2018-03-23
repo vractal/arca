@@ -1,25 +1,117 @@
-{% extends "base.html" %}
+<!doctype html>
+<html lang="en">
 
-{% block body %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Arca de filmé</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" href={{url_for( 'static',filename='bootstrap.min.css' )}}>
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" href={{url_for( 'static',filename="style2.css" )}}>
+    <link href="https://fonts.googleapis.com/css?family=Bungee|Open+Sans:400,400i&amp;subset=latin-ext" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="grid container">
+
+        <div class="row">
+
+            <nav class="col-3">
+                <!-- NOTE: Arca (lista geral) -->
+                <li class="brand">
+                    <a id="arca" href={{url_for( "arca_view")}}>
+                        <object type="image/svg+xml" data={{url_for("static",filename="images/arca.svg")}}></object>
+                     </a>
+                </li>
+                <!-- NOTE:  Lista da pessoa-->
+                <li class="nav-item">
+                    <a class="nav-link" href={{url_for( "arca_view")}}>
+                        <object  type="image/svg+xml" data={{url_for("static",filename="images/user.svg")}}></object>
+                    </a>
+                </li>
+                <!-- NOTE: Perfil da pessoa e "amigos" -->
+                <li class="nav-item">
+                    <a class="nav-link" href={{url_for( "arca_view")}}>
+                        <object  type="image/svg+xml" data={{url_for("static",filename="images/user.svg")}}></object>
+                    </a>
+                </li>
+                <!-- NOTE: Configurações -->
+                <li class="nav-item">
+                    <a class="nav-link" href={{url_for( "arca_view")}}>
+                        <object  type="image/svg+xml" data={{url_for("static",filename="images/user.svg")}}></object>
+                    </a>
+                </li>
+                <!-- NOTE: Sair -->
+                <li class="nav-item">
+                    <a class="nav-link" href={{url_for( "arca_view")}}>
+                        <object  type="image/svg+xml" data={{url_for("static",filename="images/user.svg")}}></object>
+                    </a>
+                </li>
 
 
-    <div class="row justify-content-center">
 
-      
-        <div id="movie-list">
+            </nav>
 
+            <main role="main " class="col-6 container">
+
+
+                <div class="row justify-content-center">
+                    <div class="filme-teste">
+                        <img class="poster-img col-4" src="static/posters//gynBNzwyaHKtXqlEKKLioNkjKgN.jpg" alt="no poster">
+                        <div class="filme-info col-8">
+                            <h4 class="title">The Matrix</h4>
+                            <p class="overview">Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.</p>
+
+                            <div class="links">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </main>
+            <div class="col-3">
+
+            </div>
         </div>
-      </div>
+
+
+    </div>
+
+
+    <!-- /.container -->
 
 
 
 
 
 
+    <!-- JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 
-  {% endblock %}
-  {% block scripts %}
-              <script type="text/javascript">
+    <script src={{url_for( 'static',filename='jquery-3.2.1.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='popper.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='bootstrap.min.js' )}}></script>
 
-              </script>
-  {% endblock %}
+    <script src={{url_for( 'static',filename='renderer.js' )}}></script>
+
+</body>
+
+</html>
+
+
+<!--
+ <button class="toogle-ark btn btn-outline-info btn-sm " data-toogle="false" data-id="603">Adicionar</button>
+ <a class="btn btn-outline-dark btn-sm disabled" href="#">IMDB</a> <a class="btn btn-outline-dark btn-sm" href="https://www.themoviedb.org/movie/603">The Movie Database</a>
+ <p class="overview">Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.</p>
+
+
+-->
