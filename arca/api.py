@@ -1,5 +1,5 @@
 from arca import app
-from flask import jsonify
+from flask import jsonify, session
 from flask_restful import Resource, Api, reqparse
 from arca import models as md
 from functools import wraps
@@ -21,14 +21,13 @@ parser.add_argument("user", location=["form","args"])
 
 #
 def check_user_list(func):
-    """ Decorator to change movie status in response acording to user list""" 
+    """ Decorator to change movie status in response acording to user list"""
     @wraps(func)
     def check_list(self,*args):
         response = func(self,*args)
         print(type(response))
-        args = parser.parse_args()
-        login = args["user"]
-        user = md.User.get_instance_nopwd("victor")
+        login = session["user"]
+        user = md.User.get_instance_nopwd(login)
         user_list = user.get_list()
 
         for movie in response:

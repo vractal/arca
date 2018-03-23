@@ -2,10 +2,18 @@ var Frontark = {};
 var apiUrl = "127.0.0.1/api"
 
 $(document).ready(function(){
+    $("body").niceScroll();
+
     $("#query").submit(function(event){
       query = $("#query > input").val()
-      Frontark.searchMovies(query)
+
       event.preventDefault();
+      Frontark.cleanMain();
+
+     Frontark.searchMovies(query)
+
+
+
     })
 
     $(document).on("click",".toogle-ark",function(){
@@ -17,6 +25,15 @@ $(document).ready(function(){
     })
 
 })
+
+
+
+$(document).ajaxStart(function(){  $("body").addClass("loading")});
+
+$(document).ajaxStop(function(){ $("body").removeClass("loading")});
+
+
+
 
 
 Frontark.showArca = function(){
@@ -57,8 +74,11 @@ Frontark.renderPeople = function(results){
         $peopleList.append(html)
     }
     )
-}
+};
 
+Frontark.cleanMain = function(){
+     $("main").html(`<div id="movie-list"> </div>`)
+};
 
 Frontark.renderResults = function(results){
 
@@ -77,29 +97,34 @@ Frontark.renderResults = function(results){
       } else {
           button_status = `<button class="">Nada</button>`
       }
+
       var htmlMoviePreview = `
       <div class="movie-preview">
-        <img class="poster-img" src="static/` + movie.posterimg + `" alt="no poster">
+        <div class="img-container">
+
+        <img class="poster-img" src="static/` + movie.posterimg + `" alt="no poster"><div class="img-overlay"> ` + button_status + `</div></div>
         <div class="movie-info">
           <div class="head">
 
-          <h4 class="title">` + movie.title + `</h4> ` + button_status + `  </div>
-
+          <h4 class="title">` + movie.title + `</h4>
+          <span class="date">` + movie.release_date + `  </span> </div>
 
 
 
           <p class="overview">` + movie.overview + `</p>
           <div class="links">
-            <a class="" href="#">IMDB</a> <a class="" href="https://www.themoviedb.org/movie/`+movie.themoviedb_id+`">The Movie Database</a>
+            <h5>Links:</h5><a class="" href="#">IMDB</a> <a class="" href="https://www.themoviedb.org/movie/`+movie.themoviedb_id+`">The Movie Database</a>
 
           </div>
         </div>
       </div> `
       $movieList.append(htmlMoviePreview)
 
-
-
 })
+$(".overview").niceScroll(
+    {cursorwidth: 3 ,cursorfixedheight: 20}
+);
+$("body").getNiceScroll().resize()
 
 }
 
@@ -108,10 +133,11 @@ Frontark.ToogleArk = function(movie_id, button_object){
 
     let url = "/api/arca/" +  movie_id
     var $button = button_object
+    var $container = $button.siblings(".poster-img")
     var name = $("#user-name").html()
     console.log($button.attr("data-toogle"))
     if ($button.attr("data-toogle") == "false"){
-    let request = $.post(url,{user: name}, function(){$button.html("Remover"); $button.attr("data-toogle","true")})
+    let request = $.post(url,{user: name}, function(){$button.html("Remover"), $container.addClass("saved"), $button.attr("data-toogle","true")})
     .fail(function(){alert("nao deu")})
     }
     else if ($button.attr("data-toogle") == "true") {
@@ -119,7 +145,7 @@ Frontark.ToogleArk = function(movie_id, button_object){
             url: url,
             data: {user: name},
             method: "DELETE",
-            success: function(){$button.html("Adicionar"); $button.attr("data-toogle","false")} })
+            success: function(){$button.html("Adicionar");$container.removeClass("saved"), $button.attr("data-toogle","false")} })
 
             .fail(function(){alert("nao deu")})
         }

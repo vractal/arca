@@ -116,11 +116,12 @@ class User(object):
         for rel in sel:
             mv = rel.end_node()
             movie = {}
-            movie['title'] = mv['original_title']
+            movie['title'] = mv['title_br']
             movie['themoviedb_id'] = mv['themoviedb_id']
             movie["in_arca"] = mv['in_arca']
+            movie["release_date"] = mv["release_date"][0:4]
         #    movie['imdb_id'] = mv['imdb_id']
-            movie['overview'] = mv['overview'] + "\n da db"
+            movie['overview'] = mv['overview']
             movie['tagline'] = "nenhuma"
             if mv["poster_path"]:
                 movie['posterimg'] = "posters/" + mv['poster_path']
@@ -135,6 +136,9 @@ class User(object):
             else:
                 return False
 
+    def avatar():
+
+        return "avatars/avatar.png"
 
 def create_instance(response):
     # resonse is a dict object containg info for one movie
@@ -258,6 +262,7 @@ class Database(object):
             movie["title"] = mv["title_br"]
             movie['themoviedb_id'] = mv['themoviedb_id']
             movie["in_arca"] = mv['in_arca']
+            movie["release_date"] = mv["release_date"][0:4]
         #    movie['imdb_id'] = mv['imdb_id']
             movie['overview'] = mv['overview']
             movie['tagline'] = "nenhuma"
@@ -273,11 +278,12 @@ class Database(object):
         movies = []
         for mv in selector.select("Movie", in_arca=True):
             movie = {}
-            movie['title'] = mv['original_title']
+            movie['title'] = mv['title_br']
             movie['themoviedb_id'] = mv['themoviedb_id']
             movie["in_arca"] = mv['in_arca']
+            movie["release_date"] = mv["release_date"][0:4]
         #    movie['imdb_id'] = mv['imdb_id']
-            movie['overview'] = mv['overview'] + "\n da db"
+            movie['overview'] = mv['overview']
             movie['tagline'] = "nenhuma"
             if mv["poster_path"]:
                 movie['posterimg'] = "posters/" + mv['poster_path']

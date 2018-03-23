@@ -1,13 +1,37 @@
 /* NOTE: LOGIN/REG PAGE */
+
+html, body {
+    background-color: #f7f7ff;
+    height: 100%;
+    font-family: Helvetica;
+}
+
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: 400;
+    color: #013042;
+}
+
 form.login {
 
     text-align: center;
     width: 250px;
+    position: relative;
+    bottom: 10%;
 
 }
 form object {
     width: 250px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 
 }
 .login input[type="submit"] {
@@ -19,7 +43,7 @@ form object {
     margin-left: -20px;
     padding: 0px;
     width: 20px;
-    background-color:  #cae4db;
+    background-color:  inherit;
 
 }
 .login input[type="submit"]:hover {
@@ -27,13 +51,17 @@ form object {
 }
 .login input[type="text"], .login input[ type="password"], .login input[type="email"] {
     text-align: center;
-    background-color: #cae4db;
+    background-color: inherit;
     color:#013042;
+    font-size: 28px;
     width: 75%;
     margin: 10px 0px 20px 0px;
     border-style: none;
     border-bottom: #013042 dotted 2px;
     box-shadow: 1px;
+}
+.login input[type="text"] {
+    padding: 0px 20px;
 }
  .login input[type="email"]{
      font-size: 1rem;
@@ -46,13 +74,13 @@ form object {
 
  }
 .login input[ type="password"] {
-    padding-right: 20px;
+    padding: 0px 20px;
 }
 
 .flash {
     position: relative;
-    left: -25px;
-    top: -25px;
+    left: -26px;
+    top: 20px;
     margin-bottom: -10px;
     font-weight: 400;
     font-size: 1rem;

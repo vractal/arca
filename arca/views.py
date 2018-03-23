@@ -13,6 +13,13 @@ def index():
     except:
         return render_template("login.html")
 
+@app.route("/home", methods=['GET', 'POST'])
+def home():
+    try:
+        if session["user"]:
+            return render_template("home.html")
+    except:
+        return render_template("login.html")
 
 @app.route("/registrar", methods=['GET', 'POST'])
 def register():

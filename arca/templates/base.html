@@ -6,44 +6,52 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Arca de filmé</title>
-
+    <link rel="stylesheet" href={{url_for( 'static',filename="css/reset.css" )}}>
     <link rel="stylesheet" href={{url_for( 'static',filename="css/style.css" )}}>
 
 </head>
 
-<body>
+<body class="">
     <nav>
-        <ul>
-            <li>
+        <ul class="container">
+            <li class="left">
                 <a href={{url_for("arca_view")}}>Arca</a>
             </li>
-            <li>
+            <li class="left">
                 <a href={{url_for("my_list")}}>Minha Lista</a>
             </li>
-            <li>
-                <a href={{url_for("people")}}>Pessoas</a>
-            </li>
-            <li>
-                <a href={{url_for("logout")}}>Sair (<span id="user-name">{{ session.user }}</span>)</a>
-            </li>
-            <li>
+
+            <li class="query">
                 <form id="query">
-                    <input type="text" name="query" >
-                    <button type="submit">Enviar</button>
+                    <input placeholder="Buscar para adicionar filme" type="text" name="query" >
+                    <button class="query-submit" type="submit">Buscar</button>
 
                 </form>
             </li>
+            <li class="right">
+                <a href={{url_for("logout")}}>Sair (<span id="user-name">{{ session.user }}</span>)</a>
+            </li>
+            <li class="right">
+                <a href={{url_for("people")}}>Pessoas</a>
+            </li>
+
         </ul>
 
     </nav>
+<div class="">
 
-    <main role="main" class="">
+</div>
+
+    <main id="main" role="main" class="">
 
 
         {% block body %}
         {% endblock %}
 
+
     </main>
+
+
 
 
 
@@ -54,9 +62,16 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src={{url_for( 'static',filename='jquery-3.2.1.min.js' )}}></script>
+    <script src={{url_for( 'static',filename='jquery.nicescroll.min.js' )}}></script>
+
     <script src={{url_for( 'static',filename='renderer.js' )}}></script>
 
+
     {% block scripts %} {% endblock %}
+    <div class="modal">
+    <div class="loader">Perai, carregando</div>
+
+    </div>
 
 </body>
 

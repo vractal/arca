@@ -5,6 +5,7 @@
 
         {% for person in people %}
         <div class="person">
+        <img class="avatar" src="{{url_for("static",filename="avatars/avatar.png")}}" alt="">
         <a href={{url_for("user_page",login=person.login)}}><h1>{{ person.login}}</h1></a>
 
 

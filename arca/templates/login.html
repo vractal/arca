@@ -8,17 +8,13 @@
 
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="row justify-content-center">
+
+            <div class="container ">
 
 
                 <form class="login" action={{url_for('login')}} method="POST">
 
-                    {% for message in get_flashed_messages() %}
-                      <div class="flash">
-                        <p>{{ message}}</p>
-                        </div>
-                    {% endfor %}
+
                     <object type="image/svg+xml" data={{url_for("static",filename="images/arca.svg")}}>
 
                     </object>
@@ -27,6 +23,11 @@
                   <input type="password" name="password" placeholder="    senha"><input value="&#10003;" type="submit" >
 
 
+                                      {% for message in get_flashed_messages() %}
+                                        <div class="flash">
+                                          <p>{{ message}}</p>
+                                          </div>
+                                      {% endfor %}
                 </form>
 
 
@@ -34,7 +35,6 @@
 
               </div>
 
-        </div>
 
 
 
