@@ -109,7 +109,6 @@ class Movie(BaseModel):
 
 class Movie_Translations(BaseModel):
 
-
     id_ = AutoField()
     movie_id = ForeignKeyField(Movie, backref="translations") # o que mais?
     language = CharField()
@@ -163,7 +162,7 @@ class User(BaseModel):
         list = []
         for movie in self.movies_saved:
             movie = model_to_dict(movie,backrefs=False)
-            movie["release_date"] = movie["release_date"].year
+            movie["release_date"] = str(movie['release_date'])[:4]
             list.append(movie)
 
         return list
@@ -200,7 +199,7 @@ class Arca(BaseModel):
         list = []
         for movie in cls.select().where(cls.times > 0):
             movie = model_to_dict(movie,backrefs=False)["movie"]
-            movie["release_date"] = movie["release_date"].year
+            movie["release_date"] = str(movie['release_date'])[:4]
             list.append(movie)
         return list
 
@@ -218,7 +217,7 @@ class Database(object):
     def search_movie(query):
         list = []
         for movie in Movie.select().where(Movie.title.contains(query.lower())).dicts():
-            movie['release_date'] = movie['release_date'].year
+            movie['release_date'] = str(movie['release_date'])[:4]
             list.append(movie)
         return list
 
@@ -244,8 +243,6 @@ def search_display(query):
                                 overview=movie['overview'],
                                 poster_path=movie["poster_path"],
                                 release_date=movie['release_date'])
-            mdb.get_poster2(
-                movie['title'], movie['poster_path'])
+            mdb.get_poster(movie['poster_path'])
 
     return Database.search_movie(query)
-

@@ -102,7 +102,7 @@ Frontark.renderResults = function(results){
       <div class="movie-preview">
         <div class="img-container">
 
-        <img class="poster-img" src="../static/posters` + movie.poster_path + `" alt="no poster"><div class="img-overlay"> ` + button_status + `</div></div>
+        <img class="poster-img" src="../static/posters/` + movie.poster_path + `" alt="no poster"><div class="img-overlay"> ` + button_status + `</div></div>
         <div class="movie-info">
           <div class="head">
 
@@ -113,7 +113,7 @@ Frontark.renderResults = function(results){
 
           <p class="overview">` + movie.overview + `</p>
           <div class="links">
-            <h5>Links:</h5><a class="" href="#">IMDB</a> <a class="" href="https://www.themoviedb.org/movie/`+movie.themoviedb_id+`">The Movie Database</a>
+            <h5>Links:</h5><a class="" href="#">IMDB</a> <a class="" href="https://www.themoviedb.org/movie/`+movie.id_+`">The Movie Database</a>
 
           </div>
         </div>

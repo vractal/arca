@@ -18,7 +18,6 @@ parser.add_argument("user", location=["form","args"])
 #pega lista do usuario
 #muda o campo = in_arca de acordo.
 
-
 #
 def check_user_list(func):
     """ Decorator to change movie status in response acording to user list"""

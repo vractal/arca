@@ -5,3 +5,4 @@ arca/static/posters/
 .ropeproject/
 inicio.sh
 .idea/
+production.db
