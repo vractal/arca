@@ -87,8 +87,8 @@ Frontark.renderResults = function(results){
 
     results.forEach( function(movie){
       var button_status = ""
-      var button_false = `<button class="toogle-ark" data-toogle="false" data-id="`+ movie.themoviedb_id + `">Adicionar</button>`
-      var button_true = `<button class="toogle-ark" data-toogle="true" data-id="`+ movie.themoviedb_id + `">Remover</button>`
+      var button_false = `<button class="toogle-ark" data-toogle="false" data-id="`+ movie.id_ + `">Adicionar</button>`
+      var button_true = `<button class="toogle-ark" data-toogle="true" data-id="`+ movie.id_ + `">Remover</button>`
 
       if (movie.in_arca == true){
           button_status = button_true
@@ -102,7 +102,7 @@ Frontark.renderResults = function(results){
       <div class="movie-preview">
         <div class="img-container">
 
-        <img class="poster-img" src="static/` + movie.posterimg + `" alt="no poster"><div class="img-overlay"> ` + button_status + `</div></div>
+        <img class="poster-img" src="../static/posters` + movie.poster_path + `" alt="no poster"><div class="img-overlay"> ` + button_status + `</div></div>
         <div class="movie-info">
           <div class="head">
 

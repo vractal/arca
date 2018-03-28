@@ -27,11 +27,14 @@ def check_user_list(func):
         response = func(self,*args)
         print(type(response))
         login = session["user"]
-        user = md.User.get_instance_nopwd(login)
-        user_list = user.get_list()
+        user = md.User.get(login=login)
+        user_list = []
+        for mv in user.movies_saved:
+            user_list.append(mv.title)
 
         for movie in response:
-            if movie in user_list:
+            print(movie)
+            if movie["title"] in user_list:
                 movie["in_arca"] = True
             else:
                 movie["in_arca"] = False
@@ -53,10 +56,10 @@ class Arca(Resource):
             response = md.search_display(query)
         elif user:
             try:
-                obj = md.User.get_instance_nopwd(user)
-                response = obj.get_list()
+                user = md.User.get(login=user)
+                response = user.get_list()
             except:
-                response =  "no user"
+                response = "no user"
         else:
             response = md.Database.show_arca()
         return response
@@ -64,15 +67,15 @@ class Arca(Resource):
     def post(self, movie_id):
         args = parser.parse_args()
         user = args["user"]
-        user = md.User.get_instance_nopwd(user)
-        user.add_movie(movie_id)
+        user = md.User.get(login=user)
+        user.add_movie(int(movie_id))
         return "True"
 
     def delete(self, movie_id):
         args = parser.parse_args()
         user = args["user"]
-        user = md.User.get_instance_nopwd(user)
-        user.del_movie(movie_id)
+        user = md.User.get(login=user)
+        user.del_movie(int(movie_id))
         return "True"
 
 

@@ -4,3 +4,4 @@ app = Flask(__name__)
 app.config.from_object("config")
 from arca import views
 from arca import api
+

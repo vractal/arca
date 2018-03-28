@@ -1,18 +1,19 @@
 import requests
 import json
-from arca.api_key import api_key, db_pwd
+from arca.api_key import api_key
 from datetime import datetime
 import time
-from py2neo import Graph, Node, Relationship, NodeSelector
 import sys
 import os
 import uuid
 
-graph = Graph(host="localhost",port="7687", user="neo4j", password=db_pwd)
 
 config = {
-    "language": "pt-BR"
+    "language": "pt-BR",
+    "poster_folder_path": "arca/static/posters/"
 }
+
+
 def fetch_one(id):
     base_one = "https://api.themoviedb.org/3/movie/"
     query = str(id)
@@ -48,7 +49,8 @@ def get_poster2(name,path):
     size =  "w342"
     name = name
     poster = requests.get(base_url+ size+ str(path))
-    filename = "arca/static/posters/" + str(path)
+    filename = config['poster_folder_path'] + str(path)
+    print(poster)
     with open(filename, 'wb') as f:
             f.write(poster.content)
     return str(name) + ".jpg"
