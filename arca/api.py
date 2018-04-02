@@ -4,6 +4,8 @@ from flask_restful import Resource, Api, reqparse
 from arca import models as md
 from functools import wraps
 import json
+
+
 api = Api(app)
 api.init_app(app)
 
@@ -24,7 +26,6 @@ def check_user_list(func):
     @wraps(func)
     def check_list(self,*args):
         response = func(self,*args)
-        print(type(response))
         login = session["user"]
         user = md.User.get(login=login)
         user_list = []
@@ -32,7 +33,6 @@ def check_user_list(func):
             user_list.append(mv.title)
 
         for movie in response:
-            print(movie)
             if movie["title"] in user_list:
                 movie["in_arca"] = True
             else:
