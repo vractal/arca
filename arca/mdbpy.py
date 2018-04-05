@@ -36,7 +36,6 @@ def get_poster(path):
 
     poster = requests.get(base_url+ size+ str(path))
     filename = config['poster_folder_path'] + str(path)
-    print(poster)
     with open(filename, 'wb') as f:
             f.write(poster.content)
     return str(path)

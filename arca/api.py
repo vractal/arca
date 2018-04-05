@@ -1,10 +1,11 @@
 from arca import app
-from flask import jsonify, session
+from flask import jsonify, session, url_for
 from flask_restful import Resource, Api, reqparse
 from arca import models as md
 from functools import wraps
 import json
-
+import os
+import gzip
 
 api = Api(app)
 api.init_app(app)
@@ -12,6 +13,7 @@ api.init_app(app)
 parser = reqparse.RequestParser()
 parser.add_argument("query", location="args")
 parser.add_argument("user", location=["form","args"])
+parser.add_argument("more",location=["args"])
 
 
 # idealmente, um decorador?
@@ -51,8 +53,12 @@ class Arca(Resource):
         args = parser.parse_args()
         user = args["user"]
         query = args["query"]
+        more = args["more"]
         if query:
-            response = md.search_display(query)
+            if more:
+                response = md.search_display(query,True)
+            else:
+                response = md.search_display(query)
         elif user:
             try:
                 user = md.User.get(login=user)
@@ -60,7 +66,7 @@ class Arca(Resource):
             except:
                 response = "no user"
         else:
-            response = md.Database.show_arca()
+            response = md.Database.show_all_movies()
         return response
 
     def post(self, movie_id):

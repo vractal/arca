@@ -67,9 +67,6 @@ def login():
                 flash("Senha incorreta!")
 
         except md.DoesNotExist:
-            user = md.User.select(md.User.login).where(md.User.login.contains("v"))
-            if user:
-                print(user[0].login)
             flash("Usuário não existe!")
 
     return render_template("login.html")

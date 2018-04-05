@@ -74,7 +74,6 @@ class Movie(BaseModel):
     def arca_up(self):
         if self.arca_entry:
             entry = self.arca_entry[0]
-            print(entry.movie.title, entry, entry.times)
             entry.times += 1
             entry.save()
             self.arca_status()
@@ -84,7 +83,6 @@ class Movie(BaseModel):
     def arca_down(self):
         if self.arca_entry[0]:
             entry = self.arca_entry[0]
-            print(entry.movie, entry, entry.times)
             entry.times -= 1
             entry.save()
             self.arca_status()
@@ -226,14 +224,41 @@ class Database(object):
         return Arca.get_list()
 
     @staticmethod
+    def show_all_movies():
+        list = []
+        for movie in Movie.select(Movie):
+            movie = model_to_dict(movie,backrefs=False)
+            movie["release_date"] = str(movie['release_date'])[:4]
+            list.append(movie)
+        return list
+
+    @staticmethod
     def show_users():
         return User.select(User.login)
      #   return [entry["login"] for entry in User.select(User.login).dicts()]
 
 
-def search_display(query):
+def search_display(query, more=False):
 
-    if len(Database.search_movie(query)) < 1:
+
+    if more == True:
+        results = mdb.search(query)["results"]
+        for movie in results:
+            try:
+                Movie.get(id_=movie["id"])
+            except:
+                if not movie["poster_path"]:
+                        movie["poster_path"] = "1iDlfTz7x2AP9T3oms9b6Ji0I1R.jpg"
+                Movie.get_or_create(id_=movie['id'],
+                                    title=movie['title'],
+                                    overview=movie['overview'],
+                                    poster_path=movie["poster_path"],
+                                    release_date=movie['release_date'])
+                mdb.get_poster(movie['poster_path'])
+
+
+
+    elif more == False & len(Database.search_movie(query)) < 1:
         results = mdb.search(query)['results'][:5]
         for movie in results:
             if not movie["poster_path"]:
@@ -244,5 +269,6 @@ def search_display(query):
                                 poster_path=movie["poster_path"],
                                 release_date=movie['release_date'])
             mdb.get_poster(movie['poster_path'])
+
 
     return Database.search_movie(query)
