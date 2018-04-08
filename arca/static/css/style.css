@@ -1,20 +1,21 @@
-/* NOTE: nav
+    /* NOTE: nav
 */
 .container {
     margin: 0px auto;
-    max-width: 960px;
+    max-width: 1200px;
 }
 html, body {
     margin: 0px;
     padding: 0px;
     font-family: Helvetica;
     background-color: #f7f7ff;
+    font-size: 20px;
 }
 nav {
     text-align: center;
     display: block;
     position: fixed;
-    font-size: 19px;
+    font-size: 1.2rem;
     top: 0px;
     width: 100%;
     z-index: 80000;
@@ -37,14 +38,16 @@ nav ul li a {
     text-decoration: none;
     color: black;
 }
+
 li.query {
     display: inline-block;
     margin: auto;
-    padding-left: 60px;
+    padding-left: 3rem;
 }
 
 button.query-submit {
     visibility: hidden;
+    font-size: 1.2rem;
 }
 button.query-submit:hover {
     cursor: pointer;
@@ -56,6 +59,7 @@ button.query-submit:hover {
     border: none;
     background-color: inherit;
     border-bottom: 1px inset currentcolor;
+    font-size: 1.20rem;
 }
  form:hover button.query-submit {
     visibility: visible;
@@ -109,9 +113,10 @@ main {
 
 .movie-preview {
     position: relative;
-    width: 600px;
+    width: 40rem;
     margin: 15px auto;
-    height: 230px;
+    height: 15rem;
+    opacity: 100;
 
 
 }
@@ -119,7 +124,7 @@ main {
 
 
 .movie-info {
-    width: 430px;
+    width: 560px;
     position: absolute;
     display: inline-flex;
     justify-content: space-between;
@@ -132,6 +137,38 @@ main {
 .movie-info .head {
     position: relative;
 }
+.hidden {
+    display: none;
+    opacity: 0;
+
+}
+
+.load-more {
+    width: 200px;
+    margin: 20px auto;
+    transition: all ease-out 1s;
+
+}
+
+.load-more.passed {
+    width: 40%;
+    height: 20px;
+    border-bottom: 1px inset currentcolor;
+
+}
+img.status-icon {
+    display: none;
+}
+
+div.saved img.status-icon {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    margin: 5px;
+}
 .movie-info .title{
     font-size: 20px;
     margin: 5px 0px;
@@ -141,8 +178,8 @@ main {
 .img-container {
     display: inline-block;
     position: relative;
-    width: 154px;
-    height: 230px;
+    width: 200px;
+    height: 300px;
     margin: 0px;
     padding: 0px;
 
@@ -166,9 +203,10 @@ main {
 .poster-img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
 }
 .img-container:hover .img-overlay {
     opacity: 1;
@@ -178,12 +216,10 @@ main {
 
 
 }
-.saved {
-    border: 5px groove green;
-}
+
 .overview {
     padding-top: 5px;
-    max-height: 110px;
+    max-height: 158px;
     overflow: scroll;
     margin: auto 0px;
 
@@ -203,7 +239,8 @@ main {
     position:fixed;
     top: 0px;
     left: 0px;
-    margin-top: 100px;
+    margin-top: 59px;
+    padding-top: 100px;
     width: 100%;
     height: 100%;
     z-index: 1000;
@@ -216,6 +253,7 @@ main {
 /* NOTE: */
 body.loading main {
     overflow: hidden;
+
 }
 
 body.loading .modal {
@@ -304,4 +342,13 @@ body.loading .modal {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+
+
+
+@media screen (max-width: 1100px) {
+
+
+
 }

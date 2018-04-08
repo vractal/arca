@@ -4,3 +4,5 @@ arca/static/posters/
 *.pyc
 .ropeproject/
 inicio.sh
+.idea/
+production.db
